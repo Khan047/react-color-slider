@@ -1,0 +1,36 @@
+.parent {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    width: 380px;
+    height: 380px;
+    margin: 20px;
+    padding:20px;
+    }
+    .mover{
+        background-color: gray;
+        border-radius: 25px;
+        border-width: 5px;
+    }
+    .grid-item {
+        border-radius: 25px;
+        border-width: 5px;
+    }
+    .main{
+        width: 380px;
+       margin: 0 auto;
+      
+    }
+    .img{
+        
+        position: fixed;
+        left:500px; top:20px;
+        
+    }
+    .tick{
+        position: fixed;
+        left:500px; top:20px;
+
+    }
