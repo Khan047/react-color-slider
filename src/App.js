@@ -140,7 +140,7 @@ class App extends React.Component {
   
   componentWillMount() {
     this.initBoard();
-    this.forceUpdate();
+    
   }
 
   shuffleArray(array) {
@@ -198,7 +198,7 @@ componentDidMount(){
   for(let i=0;i<colors.length;i++){
     x[i].style.backgroundColor = colors[i]
   }
-  this.forceUpdate()
+ 
 }
   render() {
    
@@ -244,9 +244,9 @@ const Cell = ({ rowIndex, columnIndex, cellValue, move ,bg ,}) => {
   
   return (
     <td id={columnIndex}>
-      <div   className="cell" onClick={(event) => {move(rowIndex, columnIndex, cellValue, event); }  } bg={bg} >
-        {value}
-        {}
+      <div   className="cell" onClick={(event) => {move(rowIndex, columnIndex, cellValue, event); }  } bg={bg}  style={{backgroundColor: value == null ? 'white':''}} >
+        
+        
       </div>
     </td>
     
