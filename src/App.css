@@ -1,36 +1,32 @@
-body {
-  font-family: 'Lucida Sans Unicode';
-  /* background: #A1FFCE;
-  background: -webkit-linear-gradient(to left, #A1FFCE , #FAFFD1);
-  background: linear-gradient(to left, #A1FFCE , #FAFFD1); */
-}
+
 .main{
   
-    width: 400px;
+    
    margin: 0 auto;
-  position: relative;
+   display: block;
 
 }
 .flex-container {
-  
-  
+  position: relative;
   display: flex;
   flex-direction: column;
-  
-  
-  
-  position: absolute;
-  top:10%;
-  left:110%;
+  left: 400px;
+  bottom:420px;
   justify-content: space-evenly;
+
+
+  
+  
   
   
 }
 
 .flex-container > div {
+  
   background-color: #f1f1f1;
   width: 50px;
-  margin: 25px;
+  margin: 17px;
+  margin-left: 20px;
   text-align: center;
   line-height: 75px;
   font-size: 30px;
@@ -38,9 +34,7 @@ body {
 }
 
 
-table {
-  margin: 0 auto;
-}
+
 
 
 
@@ -50,7 +44,6 @@ table {
   font-size: 50px;
   height: 100px;
   width: 100px;
-  
   border-radius: 5px;
   display: flex;
   justify-content: center;
