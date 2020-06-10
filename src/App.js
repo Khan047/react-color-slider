@@ -44,7 +44,7 @@ class App extends React.Component {
       }
     }
     
-    // const numbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+    
     const numbers = [1,1,1,1,2,2,2,2,3,3,3,3,4,4,4];
     numbers.forEach(n => {
       const randomIndex = Math.floor(Math.random() * allCoordinates.length);
@@ -58,38 +58,33 @@ class App extends React.Component {
   }
 
   move(r, c, value,event) {
-   //console.log(event.target)
+ 
    var table = document.getElementById('mytable');
 
     const board = this.state.board;
  
-    // Move up
+   
     if (board[r - 1] && board[r - 1][c] === 0) {
-      board[r - 1][c] = value;// color
-      board[r][c] = 0; //grey
+      board[r - 1][c] = value;
+      board[r][c] = 0; 
       
       table.rows[r-1].cells[c].style.backgroundColor = table.rows[r].cells[c].style.backgroundColor;
       table.rows[r].cells[c].style.backgroundColor='white';
-      if(this.checkRow(r-1,c,table)){
-        this.setRowState(r-1);
-      }
-       
+ 
       
     }
     
-    // Move right
+   
     if (board[r][c + 1] === 0) {
       board[r][c + 1] = value;
       board[r][c] = 0;
      
       table.rows[r].cells[c+1].style.backgroundColor = table.rows[r].cells[c].style.backgroundColor;
       table.rows[r].cells[c].style.backgroundColor='white';
-      if(this.checkRow(r,c+1,table)){
-        this.setRowState(r);
-      }
+   
     }
     
-    // Move down
+   
     if (board[r + 1]) {
       if (board[r + 1][c] === 0) {
         board[r + 1][c] = value;
@@ -97,14 +92,12 @@ class App extends React.Component {
      
         table.rows[r+1].cells[c].style.backgroundColor = table.rows[r].cells[c].style.backgroundColor;
         table.rows[r].cells[c].style.backgroundColor='white';
-        if(this.checkRow(r+1,c,table)){
-          this.setRowState(r+1);
-        }
+      
       
       }      
     }
     
-    // Move left
+  
     if (board[r][c - 1] === 0) {
       board[r][c - 1] = value;
       board[r][c] = 0;
@@ -112,9 +105,7 @@ class App extends React.Component {
 
       table.rows[r].cells[c-1].style.backgroundColor = table.rows[r].cells[c].style.backgroundColor;
       table.rows[r].cells[c].style.backgroundColor='white';
-      if(this.checkRow(r,c-1,table)){
-       this.setRowState(r);
-      }
+   
       
     }
     
@@ -142,7 +133,7 @@ class App extends React.Component {
   
       }
       else{
-      //  console.log('else')
+    
          this.setState({
           [`r${row}`]:false
         },()=>{
@@ -161,7 +152,7 @@ class App extends React.Component {
   }
   console.log(arr);
   return arr.every( (val, i, arr) => val === arr[0] )
-  //console.log(arr.every( (val, i, arr) => val === arr[0] ));
+
   }
   
   checkComplete(board) {
@@ -180,43 +171,8 @@ class App extends React.Component {
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
-setRowState(r){
-  // switch(r) {
-  //   case 0:
-  //     if(this.state.corRows[0]!==true){
-  //       this.setState(pervState=>({
-  //         r1:true
-  //       }))
-  //   }
-    
-  //     break;
-  //   case 1:
-  //     if(this.state.corRows[1]!==true){
-  //       this.setState(pervState=>({
-  //         r2:true
-  //       }))
-  //   }
-    
-  //     break;
-  //   case 2 :
-  //     if(this.state.corRows[2]!==true){
-  //       this.setState(pervState=>({
-  //         r3:true
-  //       }))
-  //   }
-    
-  //     break;
-  //   case 3 :
-  //     if(this.state.corRows[3]!==true){
-  //       this.setState(pervState=>({
-  //         r4:true
-  //       }))
-  //   }
-    
-  //   default:
-  //     // code block
-  // }
-}
+
+
 
 componentDidMount(){
   var x = document.getElementsByTagName('td');
@@ -234,10 +190,7 @@ componentDidMount(){
 
   render() {
    
-    {
-      
-    
-    }
+ 
     return (
       <div className="main">
         
