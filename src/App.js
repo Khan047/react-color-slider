@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import Table from './Table';
 import './App.css';
 
 class App extends React.Component {
@@ -7,46 +7,62 @@ class App extends React.Component {
     super(props);
     
     this.state = {
-      board: null,
+      board:null,
       gameOver: false,
       message: null,
+      input:false,
       corRows:[false,false,false,false],
       r0:false,
       r1:false,
       r2:false,
-      r3:false
-      
+      r3:false,
+      rownos:null,
+      imglist:null,default:false
     };
     
     this.move = this.move.bind(this);
+    this.initBoard = this.initBoard.bind(this);
+    this.setDefault = this.setDefault.bind(this);
   }
    matrix(m, n) {
     return Array.from({
-      // generate array of length m
+      
       length: m
-      // inside map function generate array of size n
-      // and fill it with `0`
+     
     }, () => new Array(n).fill(0));
   };
-  initBoard(r,c) {
+  initBoard(r,c,event) {
     
-  //   let board = [
-  //   [0,0,0,0],
-  //   [0,0,0,0],
-  //   [0,0,0,0],
-  //   [0,0,0,0],
-  //  ];
-  let board = this.matrix(r,c);
-    board = this.placeNumbers(board);
+    let board = [
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+   ];
+  this.handleImage(event);
+ // let board = this.matrix(r,c);
+    board = this.placeNumbers(board,c);
     
     this.setState({
-      board,
+      board:board,
       gameOver: false,
       message: null
     });
+    let i=0;
+    this.setState({
+      rownos:r,
+      input:true
+    })
+    while(i<r){
+      this.setState({
+          [i]:false
+      });
+    i++;
+    }
   }
+
   
-  placeNumbers(board) {
+  placeNumbers(board,c) {
     const allCoordinates = [];
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
@@ -54,7 +70,7 @@ class App extends React.Component {
       }
     }
     
-    
+    //var numbers=  new Array(c).fill(1);
     const numbers = [1,1,1,1,2,2,2,2,3,3,3,3,4,4,4];
     numbers.forEach(n => {
       const randomIndex = Math.floor(Math.random() * allCoordinates.length);
@@ -63,7 +79,7 @@ class App extends React.Component {
   
       board[randomCoordinate[0][0]][randomCoordinate[0][1]] = n;
     });
-    
+    console.log(board);
     return board;
   }
 
@@ -181,18 +197,55 @@ class App extends React.Component {
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
+handleImage(){
+//  var finput = document.getElementById('images');
+//  var flist = [];
+ 
+//    flist = [];
+//    for(var i=0;i<finput.files.length;i++){
+//      flist[i] = finput.files[i];
+//    }
+//    console.log(flist);
 
+// console.log(flist);
+}
 
 
 componentDidMount(){
-}
+  this.handleImage();
 
+//************************************** */
+  let row =4;
+  var x = document.getElementsByTagName('td');
+  // console.log(x)
+   var colors = ['red', 'blue','green','teal'];
+       var colors = colors.reduce(function (res, current) {
+          var o=  new Array(row).fill(current);
+          console.log(o)
+          
+           return res.concat(o);
+       }, []);
+       
+      this.shuffleArray(colors)
+      // colors.sort();
+      // console.log(colors)
+   for(let i=0;i<x.length;i++){
+     x[i].style.backgroundColor = colors[i]
+   }
+}
+setDefault(){
+  this.initBoard(4,4);
+  this.setState({
+    default:true
+  },()=>{
+    console.log('asdad')
+  });
+}
   render() {
    
  
     return (
-      <div className="main">
-        
+   <div>
         <input id ="row" placeholder="enter row"></input>
         <input id ="col" placeholder="enter col"></input>
         <button onClick={(event)=>{
@@ -200,73 +253,22 @@ componentDidMount(){
           console.log(document.getElementById('col').value);
           let row = parseInt(document.getElementById('row').value);
           let col = parseInt( document.getElementById('col').value);
-          this.initBoard(row,col);
+          this.initBoard(row,col,event);
           console.log(this.matrix(row,col));
-          let i=0;
-        //   while(i<row){
-        //   this.setState({
-        //       [i]:false
-        //   });
-        // }
-        var x = document.getElementsByTagName('td');
-        // console.log(x)
-         var colors = ['red', 'blue', 'green','teal'];
-             var colors = colors.reduce(function (res, current) {
-                
-                 return res.concat([current, current, current, current]);
-             }, []);
-            this.shuffleArray(colors)
-         for(let i=0;i<x.length;i++){
-           x[i].style.backgroundColor = colors[i]
-         }
-       
-       
-      
       }
           }>Play Game</button>
-        <table id = "mytable">
-          {this.state.board.map((row, i) => (<Row key={i} rowIndex={i} row={row} move={this.move}  />))}
-        </table>
-        <div class="flex-container">
-        {console.log(this.state)}
-          <div>
-            {this.state.r0 ? '✔' :''}
-          </div>
-          <div>{this.state.r1 ? '✔' :''}</div>
-          <div>{this.state.r2 ? '✔' :''}</div>
-          <div>{this.state.r3 ? '✔' :''}</div> 
-            {}
-        </div>
-        
-        <p>{ this.state.message }</p>
-        {}
-      </div>
+          <button onClick={
+            this.setDefault
+          }>Play default</button>
+          {console.log(this.state)}
+          <p>Upload {this.state.rownos} Images <input type="file" multiple name="submitfile" id="images" /></p>
+    <Table newboard={this.state.board} move={this.move}/>
+    {console.log(this.state)}
+   </div>
     );
   }
 };
 
-const Row = ({ row, rowIndex, move , bg ,}) => {
-  return (
-    <tr id = {rowIndex}>
-      { row.map((cell, i) => <Cell key={i} rowIndex={rowIndex} columnIndex={i} cellValue={cell} move={move} bg={bg} />) }
-    </tr>
-  );
-};
-
-const Cell = ({ rowIndex, columnIndex, cellValue, move ,bg ,}) => {
-  
-  const value = (cellValue > 0) ? cellValue : null;
-  
-  return (
-    <td id={columnIndex}>
-      <div   className="cell" onClick={(event) => {move(rowIndex, columnIndex, cellValue, event); }  } bg={bg}  style={{backgroundColor: value == null ? 'white':''}} >
-        
-        
-      </div>
-    </td>
-    
-  );
-};
 
 
 export default App;
