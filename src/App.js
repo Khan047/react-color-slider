@@ -70,8 +70,9 @@ class App extends React.Component {
       }
     }
     
-    //var numbers=  new Array(c).fill(1);
-    const numbers = [1,1,1,1,2,2,2,2,3,3,3,3,4,4,4];
+    var numbers=  new Array(c*c-1).fill(1);
+    console.log('NUMS ARE'+numbers)
+   // const numbers = [1,1,1,1,2,2,2,2,3,3,3,3,4,4,4];
     numbers.forEach(n => {
       const randomIndex = Math.floor(Math.random() * allCoordinates.length);
       
