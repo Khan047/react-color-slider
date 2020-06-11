@@ -20,13 +20,23 @@ class App extends React.Component {
     
     this.move = this.move.bind(this);
   }
-  
-  initBoard() {
-    let board = [
-    [0,0,0,0],
-    [0,0,0,0],
-    [0,0,0,0],
-    [0,0,0,0]];
+   matrix(m, n) {
+    return Array.from({
+      // generate array of length m
+      length: m
+      // inside map function generate array of size n
+      // and fill it with `0`
+    }, () => new Array(n).fill(0));
+  };
+  initBoard(r,c) {
+    
+  //   let board = [
+  //   [0,0,0,0],
+  //   [0,0,0,0],
+  //   [0,0,0,0],
+  //   [0,0,0,0],
+  //  ];
+  let board = this.matrix(r,c);
     board = this.placeNumbers(board);
     
     this.setState({
@@ -161,7 +171,7 @@ class App extends React.Component {
   }
   
   componentWillMount() {
-    this.initBoard();
+    this.initBoard(4,4);
     
   }
 
@@ -175,17 +185,6 @@ class App extends React.Component {
 
 
 componentDidMount(){
-  var x = document.getElementsByTagName('td');
- // console.log(x)
-  var colors = ['red', 'blue', 'green','teal'];
-      var colors = colors.reduce(function (res, current) {
-          return res.concat([current, current, current, current]);
-      }, []);
-     this.shuffleArray(colors)
-  for(let i=0;i<colors.length;i++){
-    x[i].style.backgroundColor = colors[i]
-  }
-
 }
 
   render() {
@@ -194,7 +193,37 @@ componentDidMount(){
     return (
       <div className="main">
         
-        
+        <input id ="row" placeholder="enter row"></input>
+        <input id ="col" placeholder="enter col"></input>
+        <button onClick={(event)=>{
+          console.log(document.getElementById('row').value);
+          console.log(document.getElementById('col').value);
+          let row = parseInt(document.getElementById('row').value);
+          let col = parseInt( document.getElementById('col').value);
+          this.initBoard(row,col);
+          console.log(this.matrix(row,col));
+          let i=0;
+        //   while(i<row){
+        //   this.setState({
+        //       [i]:false
+        //   });
+        // }
+        var x = document.getElementsByTagName('td');
+        // console.log(x)
+         var colors = ['red', 'blue', 'green','teal'];
+             var colors = colors.reduce(function (res, current) {
+                
+                 return res.concat([current, current, current, current]);
+             }, []);
+            this.shuffleArray(colors)
+         for(let i=0;i<x.length;i++){
+           x[i].style.backgroundColor = colors[i]
+         }
+       
+       
+      
+      }
+          }>Play Game</button>
         <table id = "mytable">
           {this.state.board.map((row, i) => (<Row key={i} rowIndex={i} row={row} move={this.move}  />))}
         </table>
