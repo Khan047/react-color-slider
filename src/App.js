@@ -17,12 +17,14 @@ class App extends React.Component {
       r2:false,
       r3:false,
       rownos:null,
-      imglist:null,default:false
+      imglist:null,
+      default:false
     };
     
     this.move = this.move.bind(this);
     this.initBoard = this.initBoard.bind(this);
     this.setDefault = this.setDefault.bind(this);
+    this.setZero = this.setZero.bind(this);
   }
    matrix(m, n) {
     return Array.from({
@@ -33,14 +35,14 @@ class App extends React.Component {
   };
   initBoard(r,c,event) {
     
-    let board = [
-    [0,0,0,0],
-    [0,0,0,0],
-    [0,0,0,0],
-    [0,0,0,0],
-   ];
+  //   let board = [
+  //   [0,0,0,0],
+  //   [0,0,0,0],
+  //   [0,0,0,0],
+  //   [0,0,0,0],
+  //  ];
   this.handleImage(event);
- // let board = this.matrix(r,c);
+  let board = this.matrix(r,c);
     board = this.placeNumbers(board,c);
     
     this.setState({
@@ -71,7 +73,7 @@ class App extends React.Component {
     }
     
     var numbers=  new Array(c*c-1).fill(1);
-    console.log('NUMS ARE'+numbers)
+    console.log('NUMS ARE'+numbers.length)
    // const numbers = [1,1,1,1,2,2,2,2,3,3,3,3,4,4,4];
     numbers.forEach(n => {
       const randomIndex = Math.floor(Math.random() * allCoordinates.length);
@@ -198,6 +200,32 @@ class App extends React.Component {
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
+setZero(){
+  let arr= this.state.board;
+  let zero = arr.indexOf(0);
+  for(let i=0;i<arr.length;i++){
+    for(let j =0 ; j<arr[i].length;j++){
+        if(arr[i][j]==0){
+          zero = [i,j]
+        }
+    }
+  }
+  var table = document.getElementById('mytable');
+
+      
+        // table.rows[zero[0]].cells[zero[1]].lastChild.remove();
+        // var x = table.rows[zero[0]].cells[zero[1]].childNodes[0];
+       
+        //  console.log(x)
+          //table.rows[zero[0]].cells[zero[1]].childNodes[0].children='';
+          
+         
+          
+      
+  
+  
+  console.log(zero);
+}
 handleImage(){
 //  var finput = document.getElementById('images');
 //  var flist = [];
@@ -213,26 +241,26 @@ handleImage(){
 
 
 componentDidMount(){
-  this.handleImage();
+  
 
 //************************************** */
-  let row =4;
-  var x = document.getElementsByTagName('td');
-  // console.log(x)
-   var colors = ['red', 'blue','green','teal'];
-       var colors = colors.reduce(function (res, current) {
-          var o=  new Array(row).fill(current);
-          console.log(o)
+  // let row =4;
+  // var x = document.getElementsByTagName('td');
+  // // console.log(x)
+  //  var colors = ['red', 'blue','green','teal'];
+  //      var colors = colors.reduce(function (res, current) {
+  //         var o=  new Array(row).fill(current);
+  //         console.log(o)
           
-           return res.concat(o);
-       }, []);
+  //          return res.concat(o);
+  //      }, []);
        
-      this.shuffleArray(colors)
-      // colors.sort();
-      // console.log(colors)
-   for(let i=0;i<x.length;i++){
-     x[i].style.backgroundColor = colors[i]
-   }
+  //     this.shuffleArray(colors)
+  //     // colors.sort();
+  //     // console.log(colors)
+  //  for(let i=0;i<x.length;i++){
+  //    x[i].style.backgroundColor = colors[i]
+  //  }
 }
 setDefault(){
   this.initBoard(4,4);
@@ -242,6 +270,56 @@ setDefault(){
     console.log('asdad')
   });
 }
+handleChange=(event)=>{
+  let row = 5; 
+  console.log('changing')
+  var finput = event.target.files;
+  console.log(finput)
+  var flist = [];
+  
+    flist = [];
+    for(var i=0;i<finput.length;i++){
+      flist[i] = finput[i];
+    }
+    var flist = flist.reduce(function (res, current) {
+     let o=  new Array(row).fill(current);
+     console.log(o)
+     return res.concat(o);
+ }, []);
+ console.log('flist is '+flist);
+    
+ this.setState({
+   imglist:flist
+ },()=>{
+   console.log('flist is '+flist);
+ })
+ 
+ var x = document.getElementsByTagName('td');
+ for(let i=0;i<x.length;i++){
+        setupReader(flist[i],x[i])
+  
+ }
+function setupReader(flist,x){
+  let reader = new FileReader();
+  reader.readAsDataURL(flist);
+ 
+  reader.onload = function() {
+   let fileContent = reader.result;
+   
+     let img = document.createElement('img');
+     img.src = fileContent;
+    img.height = 100;
+    img.width = 100;
+    if(x.childNodes[0].style.backgroundColor!='white') x.childNodes[0].appendChild(img) ;
+   }
+  
+}
+this.setZero();
+ }
+
+
+
+
   render() {
    
  
@@ -256,15 +334,17 @@ setDefault(){
           let col = parseInt( document.getElementById('col').value);
           this.initBoard(row,col,event);
           console.log(this.matrix(row,col));
+          //this.handleChange(row);
       }
           }>Play Game</button>
           <button onClick={
             this.setDefault
           }>Play default</button>
           {console.log(this.state)}
-          <p>Upload {this.state.rownos} Images <input type="file" multiple name="submitfile" id="images" /></p>
+          <p>Upload {this.state.rownos} Images <input type="file" multiple name="submitfile" id="images" onChange={(e)=>this.handleChange(e)}/></p>
     <Table newboard={this.state.board} move={this.move}/>
     {console.log(this.state)}
+    <div id = 'test'></div>
    </div>
     );
   }

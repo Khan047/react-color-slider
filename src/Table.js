@@ -32,24 +32,7 @@ class Table extends React.Component {
 
 componentDidMount(){
 
-    var finput = document.getElementById('images');
-    var flist = [];
-     let row = 4 ;
-      flist = [];
-      for(var i=0;i<finput.files.length;i++){
-        flist[i] = finput.files[i];
-      }
-      var flist = flist.reduce(function (res, current) {
-       var o=  new Array(row).fill(current);
-       return res.concat(o);
-   }, []);
-      
-   this.setState({
-     imglist:flist
-   },()=>{
-     console.log(flist);
-   })
-   console.log(flist);
+
 }
 
 
